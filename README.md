@@ -13,10 +13,15 @@ All models are trained, evaluated, and deployed in **Google Colab**, with model 
 ## 📁 Project Structure
 
 ├── Gender_Classification.ipynb
+
 ├── Hotel_Prediction.ipynb
+
 ├── Flights_Price_Prediction.ipynb
+
 ├── models/
+
 │ └── *.pkl / *.joblib
+
 ├── users.csv / hotels.csv / flights.csv
 
 
