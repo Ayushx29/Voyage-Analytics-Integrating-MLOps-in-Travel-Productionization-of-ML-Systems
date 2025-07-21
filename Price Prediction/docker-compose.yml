@@ -1,0 +1,31 @@
+services:
+  mlflow:
+    image: python:3.10
+    container_name: mlflow_server
+    working_dir: /mlflow
+    volumes:
+      - ../Mlflow:/mlflow
+    ports:
+      - "5000:5000"
+    command: >
+      sh -c "pip install mlflow && mlflow server
+      --backend-store-uri sqlite:///mlflow.db
+      --default-artifact-root file:/mlflow
+      --host 0.0.0.0"
+
+  airflow:
+    build: .
+    container_name: airflow_server
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+      - AIRFLOW__CORE__DAGS_FOLDER=/app
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    volumes:
+      - ../Mlflow:/app/Mlflow
+      - ./flight_price_prediction_dag.py:/app/flight_price_prediction_dag.py
+    ports:
+      - "8080:8080"
+    command: >
+      bash -c "airflow db init &&
+              airflow users create --username admin --password admin --firstname admin --lastname admin --role Admin --email admin@example.com &&
+              airflow webserver & airflow scheduler"

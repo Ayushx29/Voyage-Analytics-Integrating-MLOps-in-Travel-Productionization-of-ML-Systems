@@ -1,0 +1,7 @@
+pandas
+numpy
+scikit-learn
+mlflow
+Flask
+gunicorn
+apache-airflow==2.9.1
